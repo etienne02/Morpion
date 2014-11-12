@@ -16,11 +16,11 @@ public class Morpion {
 	private RequestProcessing rp = RequestProcessing.getInstance();
 	private MorpionUI mui;
 
-	public Morpion(String host, int port, String nom) throws Exception {
-		this.client = new MyClient(port, host);
-		this.nom = nom;
+	public Morpion() throws Exception {
+		
 		this.mui = new MorpionUI(this);
 		SwingUtilities.invokeLater(() -> this.mui.setVisible(true));
+		this.client = new MyClient();
 		
 		//envoi du nom au serveur
 		//this.client.sendRequest(new Request(1, nom.getBytes()));
@@ -57,8 +57,8 @@ public class Morpion {
 	}
 	
 	/**
-	 * Methode qui doit etre apellÃ© a chaque clic sur un bouton, si c'est au joueur de jouer,
-	 * elle enverra les donnÃ©es au serveur
+	 * Methode qui doit etre apellé a chaque clic sur un bouton, si c'est au joueur de jouer,
+	 * elle enverra les données au serveur
 	 * @param ligne la ligne choisie
 	 * @param colonne la colonne choisie
 	 */
@@ -72,7 +72,7 @@ public class Morpion {
 	}
 
 	/**
-	 * Envoi au serveur une requete contenant le choix de l'utilisateur	 * 
+	 * Envoi au serveur une requete contenant le choix de l'utilisateur
 	 * @param ligne la ligne selectionnee
 	 * @param colonne la colonne selectionnee
 	 */
@@ -81,9 +81,9 @@ public class Morpion {
 	}
 
 	/**
-	 * Change un tableau Ã  une dimension en un tableau Ã  2 dimension pour le plateau
-	 * @param data le tableau de donnÃ©es recu par le serveur
-	 * @return le tableau transformÃ©
+	 * Change un tableau à une dimension en un tableau à 2 dimension pour le plateau
+	 * @param data le tableau de données recu par le serveur
+	 * @return le tableau transformé
 	 */
 	private static byte[][] toPlate(byte[] data) {
 		return new byte[][] { new byte[] { data[0], data[1], data[2] },
@@ -94,7 +94,7 @@ public class Morpion {
 	
 	/**
 	 * Change le tableau de bytes en String
-	 * @param tab le plateau de donnÃ©es
+	 * @param tab le plateau de données
 	 * @return le plateau a afficher
 	 */
 	private static String[][] toString(byte[][] tab) {
@@ -114,8 +114,7 @@ public class Morpion {
 
 	public static void main(String[] args) {
 		try {
-			//String nom = JOptionPane.showInputDialog(null, "quel est votre nom?");
-			new Morpion("10.31.4.118", 5555, /*nom*/"etienne");
+			new Morpion();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
