@@ -1,6 +1,7 @@
 package client;
 
-import java.awt.GridLayout;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import javax.swing.JFrame;
 
@@ -12,7 +13,7 @@ public class MorpionUI extends JFrame{
 	private PanelConnection connection;
 	
 	
-	public MorpionUI(Morpion morpion) {		
+	public MorpionUI(Morpion morpion) {
 		super();
 		this.morpion = morpion;
 		this.connection = new PanelConnection(this);
@@ -21,9 +22,7 @@ public class MorpionUI extends JFrame{
 		this.setResizable(false);
 		this.setSize(800, 600);
 		this.setTitle("Morpion : se connecter");
-		this.setLayout(new GridLayout(3,3));
 		this.add(this.connection);
-		
 	}
 	
 	/**
@@ -41,6 +40,7 @@ public class MorpionUI extends JFrame{
 		this.remove(this.connection);
 		this.setTitle("Morpion : " + this.morpion.getName());
 		this.add(this.game);
+		this.validate();
 	}
 	
 	/**
@@ -55,8 +55,13 @@ public class MorpionUI extends JFrame{
 	 * Methode qui se connecte au serveur et lance la partie si c'est possible sinon ...
 	 * @param ip l'ip du serveur auquel se connecter
 	 * @param name le pseudo de l'utilisateur
+	 * @throws Exception 
+	 * @throws IOException 
+	 * @throws SocketTimeoutException 
 	 */
-	public void connect(String ip, String name) {
+	public void connect(String ip, String name) throws SocketTimeoutException, IOException, Exception {
+		this.morpion.setName(name);
+		this.morpion.connectToServ(ip);
 		this.startGame();
 	}
 

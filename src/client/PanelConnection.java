@@ -1,5 +1,8 @@
 package client;
 
+import java.awt.Color;
+import java.net.SocketTimeoutException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,8 +13,8 @@ public class PanelConnection extends JPanel{
 
 	private static final long serialVersionUID = 2L;
 	
-	private JTextField ip = new JTextField();
-	private JTextField name = new JTextField();
+	private JTextField ip = new JTextField(20);
+	private JTextField name = new JTextField(20);
 	private JButton connection = new JButton("Commencer partie");
 	private MorpionUI morpionUI;
 	
@@ -22,6 +25,8 @@ public class PanelConnection extends JPanel{
 		//Creation de labels
 		JLabel ipLabel = new JLabel("adresse IP : ");
 		JLabel namLabel = new JLabel("votre pseudo : ");
+		JLabel erreur = new JLabel();
+		erreur.setForeground(Color.RED);
 		
 		//Creation de panels
 		JPanel ipPanel= new JPanel();
@@ -30,6 +35,7 @@ public class PanelConnection extends JPanel{
 		//ajout au panels pour mise en forme
 		ipPanel.add(ipLabel);
 		ipPanel.add(this.ip);
+		ipPanel.add(erreur);
 		namePanel.add(namLabel);
 		namePanel.add(this.name);
 		
@@ -40,7 +46,13 @@ public class PanelConnection extends JPanel{
 		
 		//on se connecte quand on clic sur le bouton
 		this.connection.addActionListener(e -> {
-			PanelConnection.this.morpionUI.connect(PanelConnection.this.ip.getText(), PanelConnection.this.name.getText());
+			try {
+				PanelConnection.this.morpionUI.connect(PanelConnection.this.ip.getText(), PanelConnection.this.name.getText());
+			}catch (SocketTimeoutException e1) {
+				erreur.setText("le serveur ne repond pas");
+			}catch (Exception e2) {
+				erreur.setText("ip incorrecte");
+			}
 		});
 	}
 
