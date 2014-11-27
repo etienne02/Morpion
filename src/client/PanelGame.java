@@ -23,8 +23,11 @@ public class PanelGame extends JPanel{
 	
 	public PanelGame(Morpion morpion) {
 		this.morpion = morpion;
-		this.setLayout(new GridLayout(3, 3));
 		
+		//Gestion du layout
+		this.setLayout(new GridLayout(3, 3, 10, 10));
+		
+		//L'ajout des boutons à la fenetre
 		this.add(b1);
 		this.add(b2);
 		this.add(b3);
@@ -35,6 +38,7 @@ public class PanelGame extends JPanel{
 		this.add(b8);
 		this.add(b9);
 		
+		//L'ajout d'action aux boutons
 		b1.addActionListener(e -> this.morpion.updateOnClick(0, 0));
 		b2.addActionListener(e -> this.morpion.updateOnClick(0, 1));
 		b3.addActionListener(e -> this.morpion.updateOnClick(0, 2));

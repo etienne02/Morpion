@@ -38,7 +38,7 @@ public class MorpionUI extends JFrame{
 	 */
 	private void startGame() {
 		this.remove(this.connection);
-		this.setTitle("Morpion : " + this.morpion.getName());
+		this.setTitle("Morpion : " + this.morpion.getName() + " VERSUS " + this.morpion.getAdversaireName());
 		this.add(this.game);
 		this.validate();
 	}
@@ -49,6 +49,14 @@ public class MorpionUI extends JFrame{
 	 */
 	public void update(String[][] plateau) {
 		this.game.update(plateau);
+	}
+	
+	/**
+	 * Permat d'afficher le nom du vainqueur à la fin de la partie
+	 * @param nom
+	 */
+	public void afficherVainqueur(String nom){
+		
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.net.SocketTimeoutException;
 
@@ -20,7 +21,7 @@ public class PanelConnection extends JPanel{
 	
 	public PanelConnection(MorpionUI morionUI) {
 		this.morpionUI = morionUI;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new BorderLayout());
 		
 		//Creation de labels
 		JLabel ipLabel = new JLabel("adresse IP : ");
@@ -31,6 +32,8 @@ public class PanelConnection extends JPanel{
 		//Creation de panels
 		JPanel ipPanel= new JPanel();
 		JPanel namePanel = new JPanel();
+		JPanel champsPanel = new JPanel();
+		JPanel boutonPanel = new JPanel();
 		
 		//ajout au panels pour mise en forme
 		ipPanel.add(ipLabel);
@@ -38,11 +41,15 @@ public class PanelConnection extends JPanel{
 		ipPanel.add(erreur);
 		namePanel.add(namLabel);
 		namePanel.add(this.name);
+		champsPanel.add(ipPanel);
+		champsPanel.add(namePanel);
+		boutonPanel.add(this.connection);
+		
+		champsPanel.setLayout(new BoxLayout(champsPanel, BoxLayout.Y_AXIS));
 		
 		//ajout au panel courant (this)
-		this.add(ipPanel);
-		this.add(namePanel);
-		this.add(this.connection);
+		this.add(champsPanel, BorderLayout.CENTER);
+		this.add(boutonPanel, BorderLayout.SOUTH);
 		
 		//on se connecte quand on clic sur le bouton
 		this.connection.addActionListener(e -> {

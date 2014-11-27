@@ -41,13 +41,14 @@ public class Morpion {
 			e.printStackTrace();
 		}
 		
-		// Si victoire, recoit le nom du vainqueur
+		// Quand victoire, recoit le nom du vainqueur
 		try {
 			rp.add(new RequestPattern(1) {
 
 				@Override
 				public void process(Request r, MyConnection myConnection) {
 					Morpion.this.playing = false;
+					Morpion.this.mui.afficherVainqueur(r.data.toString());
 				}
 			});
 		} catch (Exception e) {
@@ -60,7 +61,7 @@ public class Morpion {
 
 				@Override
 				public void process(Request r, MyConnection myConnection) {
-					this.adversaireName = r.data;
+					Morpion.this.adversaireName = r.data.toString();
 				}
 			});
 		} catch (Exception e) {
@@ -69,7 +70,7 @@ public class Morpion {
 		
 		// Message d'erreur
 		/**
-		 * Commence toujour par "ERROR_NOM : message"
+		 * Commence toujours par "ERROR_NOM : message"
 		 */
 		try {
 			rp.add(new RequestPattern(3) {
@@ -93,6 +94,10 @@ public class Morpion {
 		return this.name;
 	}
 	
+	public String getAdversaireName() {
+		return this.adversaireName;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -100,20 +105,20 @@ public class Morpion {
 	/**
 	 * Methode qui se connecte au serveur si elle y arrive et envoi une requete comportant le nom
 	 * @param ip l'ip du serveur
-	 * @throws SocketTimeoutException si le socket n'a pas repondu assez vite (10 ms)
-	 * @throws IOException si la connexion ne s'établie pas
+	 * @throws SocketTimeoutException si le socket n'à pas repondu assez vite (100 ms)
+	 * @throws IOException si la connexion ne s'etablie pas
 	 * @throws Exception dans les autres cas
 	 */
 	public void connectToServ(String ip) throws SocketTimeoutException, IOException, Exception {
-		this.client.connect(ip, 5555, 10);
+		this.client.connect(ip, 5555, 100);
 		
 		//envoi du nom au serveur
 		this.client.sendRequest(new Request(1, this.name));
 	}
 	
 	/**
-	 * Methode qui doit etre apellé a chaque clic sur un bouton, si c'est au joueur de jouer,
-	 * elle enverra les données au serveur
+	 * Methode qui doit etre apelle a chaque clic sur un bouton, si c'est au joueur de jouer,
+	 * elle enverra les donnees au serveur
 	 * @param ligne la ligne choisie
 	 * @param colonne la colonne choisie
 	 */
@@ -128,8 +133,8 @@ public class Morpion {
 
 	/**
 	 * Envoi au serveur une requete contenant le choix de l'utilisateur
-	 * @param ligne la ligne selectionnee
-	 * @param colonne la colonne selectionnee
+	 * @param ligne la ligne selectionnée
+	 * @param colonne la colonne selectionnée
 	 */
 	private void sendChoice(int ligne, int colonne) {
 			this.client.sendRequest(new Request(2, new int[] {ligne, colonne }));
@@ -137,8 +142,8 @@ public class Morpion {
 
 	/**
 	 * Change un tableau à une dimension en un tableau à 2 dimension pour le plateau
-	 * @param data le tableau de données recu par le serveur
-	 * @return le tableau transformé
+	 * @param data le tableau de donnees recu par le serveur
+	 * @return le tableau transformés
 	 */
 	private static byte[][] toPlate(byte[] data) {
 		return new byte[][] { new byte[] { data[0], data[1], data[2] },
@@ -149,8 +154,8 @@ public class Morpion {
 	
 	/**
 	 * Change le tableau de bytes en String
-	 * @param tab le plateau de données
-	 * @return le plateau a afficher
+	 * @param tab le plateau de donnees
+	 * @return le plateau à afficher
 	 */
 	private static String[][] toString(byte[][] tab) {
 		String[][] tableau = new String[3][3];
