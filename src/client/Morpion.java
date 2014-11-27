@@ -14,6 +14,7 @@ public class Morpion {
 
 	private MyClient client;
 	private String name;
+	private String adversaireName;
 	private boolean playing = false;
 	private String[][] plateau;
 	private RequestProcessing rp = RequestProcessing.getInstance();
@@ -40,7 +41,7 @@ public class Morpion {
 			e.printStackTrace();
 		}
 		
-		// Win
+		// Si victoire, recoit le nom du vainqueur
 		try {
 			rp.add(new RequestPattern(1) {
 
@@ -51,7 +52,35 @@ public class Morpion {
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		
+		// Le nom de l'adversaire
+		try {
+			rp.add(new RequestPattern(2) {
+
+				@Override
+				public void process(Request r, MyConnection myConnection) {
+					this.adversaireName = r.data;
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Message d'erreur
+		/**
+		 * Commence toujour par "ERROR_NOM : message"
+		 */
+		try {
+			rp.add(new RequestPattern(3) {
+
+				@Override
+				public void process(Request r, MyConnection myConnection) {
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 				
 	}
@@ -72,7 +101,7 @@ public class Morpion {
 	 * Methode qui se connecte au serveur si elle y arrive et envoi une requete comportant le nom
 	 * @param ip l'ip du serveur
 	 * @throws SocketTimeoutException si le socket n'a pas repondu assez vite (10 ms)
-	 * @throws IOException si la connexion ne s'établie pas
+	 * @throws IOException si la connexion ne s'Ã©tablie pas
 	 * @throws Exception dans les autres cas
 	 */
 	public void connectToServ(String ip) throws SocketTimeoutException, IOException, Exception {
@@ -83,8 +112,8 @@ public class Morpion {
 	}
 	
 	/**
-	 * Methode qui doit etre apellé a chaque clic sur un bouton, si c'est au joueur de jouer,
-	 * elle enverra les données au serveur
+	 * Methode qui doit etre apellÃ© a chaque clic sur un bouton, si c'est au joueur de jouer,
+	 * elle enverra les donnÃ©es au serveur
 	 * @param ligne la ligne choisie
 	 * @param colonne la colonne choisie
 	 */
@@ -107,9 +136,9 @@ public class Morpion {
 	}
 
 	/**
-	 * Change un tableau à une dimension en un tableau à 2 dimension pour le plateau
-	 * @param data le tableau de données recu par le serveur
-	 * @return le tableau transformé
+	 * Change un tableau Ã  une dimension en un tableau Ã  2 dimension pour le plateau
+	 * @param data le tableau de donnÃ©es recu par le serveur
+	 * @return le tableau transformÃ©
 	 */
 	private static byte[][] toPlate(byte[] data) {
 		return new byte[][] { new byte[] { data[0], data[1], data[2] },
@@ -120,7 +149,7 @@ public class Morpion {
 	
 	/**
 	 * Change le tableau de bytes en String
-	 * @param tab le plateau de données
+	 * @param tab le plateau de donnÃ©es
 	 * @return le plateau a afficher
 	 */
 	private static String[][] toString(byte[][] tab) {
