@@ -23,6 +23,9 @@ public class PanelConnection extends JPanel{
 		this.morpionUI = morionUI;
 		this.setLayout(new BorderLayout());
 		
+		// TODO : TEMP
+		ip.setText("10.31.4.136");
+		
 		//Creation de labels
 		JLabel ipLabel = new JLabel("adresse IP : ");
 		JLabel namLabel = new JLabel("votre pseudo : ");

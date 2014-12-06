@@ -62,6 +62,7 @@ public class Morpion {
 				@Override
 				public void process(Request r, MyConnection myConnection) {
 					Morpion.this.adversaireName = r.data.toString();
+					Morpion.this.mui.updateTitle();
 				}
 			});
 		} catch (Exception e) {
@@ -137,6 +138,7 @@ public class Morpion {
 	 * @param colonne la colonne selectionnée
 	 */
 	private void sendChoice(int ligne, int colonne) {
+		// envois du choix au server
 			this.client.sendRequest(new Request(2, new int[] {ligne, colonne }));
 	}
 
