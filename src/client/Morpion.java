@@ -26,7 +26,7 @@ public class Morpion {
 		SwingUtilities.invokeLater(() -> this.mui.setVisible(true));
 		this.client = new MyClient();
 
-		// requete pour savoir quand c'est au client de jouer
+		// requete pour savoir quand c'est au client de jouer, reception du tableau
 		try {
 			rp.add(new RequestPattern(0) {
 
@@ -48,7 +48,7 @@ public class Morpion {
 				@Override
 				public void process(Request r, MyConnection myConnection) {
 					Morpion.this.playing = false;
-					Morpion.this.mui.afficherVainqueur(r.data.toString());
+					Morpion.this.mui.afficherVainqueur(r.getString());
 				}
 			});
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class Morpion {
 
 				@Override
 				public void process(Request r, MyConnection myConnection) {
-					Morpion.this.adversaireName = r.data.toString();
+					Morpion.this.adversaireName = r.getString();
 					Morpion.this.mui.updateTitle();
 				}
 			});
@@ -72,6 +72,7 @@ public class Morpion {
 		// Message d'erreur
 		/**
 		 * Commence toujours par "ERROR_NOM : message"
+		 * ERROR_CASE_USED : nom
 		 */
 		try {
 			rp.add(new RequestPattern(3) {
@@ -82,8 +83,7 @@ public class Morpion {
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 				
 	}
 	
@@ -140,6 +140,7 @@ public class Morpion {
 	private void sendChoice(int ligne, int colonne) {
 		// envois du choix au server
 			this.client.sendRequest(new Request(2, new int[] {ligne, colonne }));
+			System.out.println("envoi 2");
 	}
 
 	/**
