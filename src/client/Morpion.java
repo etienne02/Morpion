@@ -140,7 +140,6 @@ public class Morpion {
 	private void sendChoice(int ligne, int colonne) {
 		// envois du choix au server
 			this.client.sendRequest(new Request(2, new int[] {ligne, colonne }));
-			System.out.println("envoi 2");
 	}
 
 	/**

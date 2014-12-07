@@ -27,7 +27,7 @@ public class PanelGame extends JPanel{
 		//Gestion du layout
 		this.setLayout(new GridLayout(3, 3, 10, 10));
 		
-		//L'ajout des boutons à la fenetre
+		//L'ajout des boutons Ã  la fenetre
 		this.add(b1);
 		this.add(b2);
 		this.add(b3);
@@ -52,8 +52,8 @@ public class PanelGame extends JPanel{
 	}
 	
 	/**
-	 * Met à jour le l'affichage du plateau
-	 * @param tab le plateau contenant les données à afficher
+	 * Met ï¿½ jour le l'affichage du plateau
+	 * @param tab le plateau contenant les donnÃ©es Ã  afficher
 	 */
 	public void update(String[][] tab) {		
 		this.b1.setText(tab[0][0]);
